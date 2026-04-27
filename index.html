@@ -67,25 +67,34 @@
         data-phase="intro"
         aria-label="Einführung"
       >
-        <div class="phase-inner">
-          <div class="grounding-lines" aria-live="polite" aria-atomic="false">
-            <p class="grounding-line is-hidden" data-line="1">
-              <span data-i18n="grounding-1-de">Du bist gerade hier.</span>
-              <span data-i18n="grounding-1-en" class="is-hidden">You are here.</span>
-            </p>
-            <p class="grounding-line is-hidden" data-line="2">
-              <span data-i18n="grounding-2-de">In diesem Moment.</span>
-              <span data-i18n="grounding-2-en" class="is-hidden">In this moment.</span>
-            </p>
-            <p class="grounding-line is-hidden" data-line="3">
-              <span data-i18n="grounding-3-de">Du darfst einfach sein.</span>
-              <span data-i18n="grounding-3-en" class="is-hidden">You are allowed to simply be.</span>
-            </p>
-            <p class="grounding-line is-hidden" data-line="4">
-              <span data-i18n="grounding-4-de">Wir beginnen langsam.</span>
-              <span data-i18n="grounding-4-en" class="is-hidden">We begin slowly.</span>
-            </p>
-          </div>
+    <div class="phase-inner">
+  <div class="grounding-lines" aria-live="polite" aria-atomic="false">
+
+```
+<p class="grounding-line" data-line="1">
+  <span data-i18n="grounding-1-de">Du bist gerade hier.</span>
+  <span data-i18n="grounding-1-en" class="is-hidden">You are here.</span>
+</p>
+
+<p class="grounding-line" data-line="2">
+  <span data-i18n="grounding-2-de">In diesem Moment.</span>
+  <span data-i18n="grounding-2-en" class="is-hidden">In this moment.</span>
+</p>
+
+<p class="grounding-line" data-line="3">
+  <span data-i18n="grounding-3-de">Du darfst einfach sein.</span>
+  <span data-i18n="grounding-3-en" class="is-hidden">You are allowed to simply be.</span>
+</p>
+
+<p class="grounding-line" data-line="4">
+  <span data-i18n="grounding-4-de">Wir beginnen langsam.</span>
+  <span data-i18n="grounding-4-en" class="is-hidden">We begin slowly.</span>
+</p>
+```
+
+  </div>
+</div>
+
 
           <div class="phase-skip">
             <button
@@ -380,10 +389,10 @@
               </div>
 
               <!-- Audio hooks for future implementation -->
-              <audio id="audio-inhale-de" src="audio/inhale-de.mp3" preload="none" aria-hidden="true"></audio>
-              <audio id="audio-exhale-de" src="audio/exhale-de.mp3" preload="none" aria-hidden="true"></audio>
-              <audio id="audio-inhale-en" src="audio/inhale-en.mp3" preload="none" aria-hidden="true"></audio>
-              <audio id="audio-exhale-en" src="audio/exhale-en.mp3" preload="none" aria-hidden="true"></audio>
+           <audio id="audio-inhale-de" preload="none" aria-hidden="true"></audio>
+<audio id="audio-exhale-de" preload="none" aria-hidden="true"></audio>
+<audio id="audio-inhale-en" preload="none" aria-hidden="true"></audio>
+<audio id="audio-exhale-en" preload="none" aria-hidden="true"></audio>
             </li>
 
             <!-- About -->
@@ -500,7 +509,7 @@
   <div class="sr-only" aria-live="polite" id="sr-announcer"></div>
 
   <!-- GSAP CDN -->
-  <script src="[cdnjs.cloudflare.com](https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js)" defer></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
 
   <!-- App Script -->
   <script src="script.js" defer></script>
