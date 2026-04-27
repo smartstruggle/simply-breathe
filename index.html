@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="de" data-lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Simply Breathe – Ein ruhiger Moment, wenn dein Kopf nicht still wird." />
+  <meta name="theme-color" content="#0d1117" />
+  <title>Simply Breathe</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body data-phase="intro" data-mode="auto" data-lang="de">
+
+  <!-- ===================== APP SHELL ===================== -->
+  <div id="app" class="app-shell">
+
+    <!-- ===================== HEADER ===================== -->
+    <header class="app-header" role="banner">
+      <div class="header-inner">
+
+        <div class="header-logo">
+          <span class="app-title">Simply Breathe</span>
+        </div>
+
+        <div class="header-controls">
+
+          <!-- Language Switch -->
+          <nav class="lang-switch" aria-label="Language selection">
+            <button
+              class="lang-btn is-active"
+              data-lang-target="de"
+              aria-pressed="true"
+              aria-label="Deutsch auswählen"
+            >DE</button>
+            <span class="lang-divider" aria-hidden="true">|</span>
+            <button
+              class="lang-btn"
+              data-lang-target="en"
+              aria-pressed="false"
+              aria-label="Select English"
+            >EN</button>
+          </nav>
+
+          <!-- Burger Menu Button -->
+          <button
+            class="burger-btn"
+            id="burger-btn"
+            aria-label="Menü öffnen"
+            aria-expanded="false"
+            aria-controls="menu-drawer"
+          >
+            <span class="burger-line"></span>
+            <span class="burger-line"></span>
+            <span class="burger-line"></span>
+          </button>
+
+        </div>
+      </div>
+    </header>
+
+    <!-- ===================== MAIN ===================== -->
+    <main class="app-main" id="main-content" role="main">
+
+      <!-- PHASE 1: Intro / Grounding -->
+      <section
+        class="phase phase-intro is-active"
+        id="phase-intro"
+        data-phase="intro"
+        aria-label="Einführung"
+      >
+        <div class="phase-inner">
+          <div class="grounding-lines" aria-live="polite" aria-atomic="false">
+            <p class="grounding-line is-hidden" data-line="1">
+              <span data-i18n="grounding-1-de">Du bist gerade hier.</span>
+              <span data-i18n="grounding-1-en" class="is-hidden">You are here.</span>
+            </p>
+            <p class="grounding-line is-hidden" data-line="2">
+              <span data-i18n="grounding-2-de">In diesem Moment.</span>
+              <span data-i18n="grounding-2-en" class="is-hidden">In this moment.</span>
+            </p>
+            <p class="grounding-line is-hidden" data-line="3">
+              <span data-i18n="grounding-3-de">Du darfst einfach sein.</span>
+              <span data-i18n="grounding-3-en" class="is-hidden">You are allowed to simply be.</span>
+            </p>
+            <p class="grounding-line is-hidden" data-line="4">
+              <span data-i18n="grounding-4-de">Wir beginnen langsam.</span>
+              <span data-i18n="grounding-4-en" class="is-hidden">We begin slowly.</span>
+            </p>
+          </div>
+
+          <div class="phase-skip">
+            <button
+              class="skip-btn"
+              id="skip-intro-btn"
+              data-skip-phase="intro"
+              aria-label="Einführung überspringen"
+            >
+              <span data-i18n="skip-de">Überspringen</span>
+              <span data-i18n="skip-en" class="is-hidden">Skip</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- PHASE 2: Touch / Contact -->
+      <section
+        class="phase phase-contact is-hidden"
+        id="phase-contact"
+        data-phase="contact"
+        aria-label="Kontakt"
+      >
+        <div class="phase-inner">
+          <p class="contact-prompt">
+            <span data-i18n="contact-de">Lege deinen Finger hier hin.</span>
+            <span data-i18n="contact-en" class="is-hidden">Place your finger here.</span>
+          </p>
+
+          <!-- Central Breathing Circle (also used in Phase 3) -->
+          <div class="breathing-stage">
+            <button
+              class="breath-circle"
+              id="breath-circle"
+              data-mode="auto"
+              data-state="idle"
+              aria-label="Atemkreis – berühren zum Starten"
+              aria-describedby="breath-label"
+            >
+              <span class="breath-circle-inner" aria-hidden="true"></span>
+              <span class="breath-circle-glow" aria-hidden="true"></span>
+            </button>
+          </div>
+
+          <div class="phase-skip">
+            <button
+              class="skip-btn"
+              id="skip-contact-btn"
+              data-skip-phase="contact"
+              aria-label="Kontaktphase überspringen"
+            >
+              <span data-i18n="skip-de">Überspringen</span>
+              <span data-i18n="skip-en" class="is-hidden">Skip</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- PHASE 3: Breathing -->
+      <section
+        class="phase phase-breathing is-hidden"
+        id="phase-breathing"
+        data-phase="breathing"
+        aria-label="Atemübung"
+      >
+        <div class="phase-inner">
+
+          <!-- Breath Label -->
+          <div
+            class="breath-label-area"
+            id="breath-label"
+            aria-live="polite"
+            aria-atomic="true"
+          >
+            <span class="breath-label breath-label-inhale is-hidden">
+              <span data-i18n="inhale-de">Einatmen</span>
+              <span data-i18n="inhale-en" class="is-hidden">Inhale</span>
+            </span>
+            <span class="breath-label breath-label-exhale is-hidden">
+              <span data-i18n="exhale-de">Ausatmen</span>
+              <span data-i18n="exhale-en" class="is-hidden">Exhale</span>
+            </span>
+          </div>
+
+          <!-- Central Breathing Circle (shared element, moved here by JS) -->
+          <div class="breathing-stage" id="breathing-stage-main">
+            <!-- The #breath-circle button is shared across phases.
+                 JavaScript will manage visibility and placement. -->
+          </div>
+
+          <!-- 11-Step Atmospheric Progress -->
+          <div
+            class="breath-progress"
+            id="breath-progress"
+            role="progressbar"
+            aria-valuemin="0"
+            aria-valuemax="11"
+            aria-valuenow="0"
+            aria-label="Atemfortschritt"
+          >
+            <ol class="progress-dots" aria-hidden="true">
+              <li class="progress-dot" data-cycle="1"></li>
+              <li class="progress-dot" data-cycle="2"></li>
+              <li class="progress-dot" data-cycle="3"></li>
+              <li class="progress-dot" data-cycle="4"></li>
+              <li class="progress-dot" data-cycle="5"></li>
+              <li class="progress-dot" data-cycle="6"></li>
+              <li class="progress-dot" data-cycle="7"></li>
+              <li class="progress-dot" data-cycle="8"></li>
+              <li class="progress-dot" data-cycle="9"></li>
+              <li class="progress-dot" data-cycle="10"></li>
+              <li class="progress-dot" data-cycle="11"></li>
+            </ol>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- PHASE 4: Completion -->
+      <section
+        class="phase phase-completion is-hidden"
+        id="phase-completion"
+        data-phase="completion"
+        aria-label="Abschluss"
+      >
+        <div class="phase-inner">
+          <div class="completion-lines" aria-live="polite">
+            <p class="completion-line">
+              <span data-i18n="completion-1-de">Bleib noch einen Moment hier.</span>
+              <span data-i18n="completion-1-en" class="is-hidden">Stay here for one more moment.</span>
+            </p>
+            <p class="completion-line">
+              <span data-i18n="completion-2-de">Du kannst dieses Gefühl mitnehmen.</span>
+              <span data-i18n="completion-2-en" class="is-hidden">You can take this feeling with you.</span>
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- PHASE 5: Feedback -->
+      <section
+        class="phase phase-feedback is-hidden"
+        id="phase-feedback"
+        data-phase="feedback"
+        aria-label="Rückmeldung"
+      >
+        <div class="phase-inner">
+          <p class="feedback-question">
+            <span data-i18n="feedback-q-de">Fühlst du dich etwas ruhiger?</span>
+            <span data-i18n="feedback-q-en" class="is-hidden">Do you feel a little calmer?</span>
+          </p>
+          <div class="feedback-actions" role="group" aria-labelledby="feedback-label">
+            <span id="feedback-label" class="sr-only">Rückmeldung geben</span>
+            <button
+              class="feedback-btn"
+              id="feedback-yes"
+              data-feedback="yes"
+              aria-label="Ja, ich fühle mich etwas ruhiger"
+            >
+              <span data-i18n="feedback-yes-de">Ja</span>
+              <span data-i18n="feedback-yes-en" class="is-hidden">Yes</span>
+            </button>
+            <button
+              class="feedback-btn"
+              id="feedback-no"
+              data-feedback="no"
+              aria-label="Nein, nicht wirklich"
+            >
+              <span data-i18n="feedback-no-de">Nein</span>
+              <span data-i18n="feedback-no-en" class="is-hidden">No</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Hero copy (visible on landing, fades during phases) -->
+      <div class="hero-copy" id="hero-copy" aria-hidden="false">
+        <h1 class="hero-headline">
+          <span data-i18n="headline-de">Ein Moment für dich.</span>
+          <span data-i18n="headline-en" class="is-hidden">A moment for you.</span>
+        </h1>
+        <p class="hero-subline">
+          <span data-i18n="subline-de">Ein ruhiger Moment, wenn dein Kopf nicht still wird.</span>
+          <span data-i18n="subline-en" class="is-hidden">A quiet moment when your mind will not settle.</span>
+        </p>
+      </div>
+
+    </main>
+
+    <!-- ===================== MENU DRAWER ===================== -->
+    <aside
+      class="menu-drawer is-hidden"
+      id="menu-drawer"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Hauptmenü"
+      aria-hidden="true"
+      data-panel="menu"
+    >
+      <div class="menu-drawer-inner">
+
+        <!-- Close Button -->
+        <button
+          class="menu-close-btn"
+          id="menu-close-btn"
+          aria-label="Menü schließen"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+
+        <nav class="menu-nav" aria-label="Menünavigation">
+          <ul class="menu-list">
+
+            <!-- Back to Smart Struggle -->
+            <li class="menu-item">
+              <a
+                class="menu-link menu-link-back"
+                href="#smart-struggle"
+                aria-label="Zurück zu Smart Struggle"
+              >
+                <span data-i18n="menu-back-de">← Zurück zu Smart Struggle</span>
+                <span data-i18n="menu-back-en" class="is-hidden">← Back to Smart Struggle</span>
+              </a>
+            </li>
+
+            <!-- Mode Toggle: Auto / Hold -->
+            <li class="menu-item menu-item-mode">
+              <span class="menu-label">
+                <span data-i18n="menu-mode-de">Modus</span>
+                <span data-i18n="menu-mode-en" class="is-hidden">Mode</span>
+              </span>
+              <div
+                class="mode-toggle"
+                role="group"
+                aria-label="Atemmodus wählen"
+                id="mode-toggle"
+              >
+                <button
+                  class="mode-btn is-active"
+                  id="mode-auto-btn"
+                  data-mode="auto"
+                  aria-pressed="true"
+                  aria-label="Auto-Modus: Atemkreis atmet automatisch"
+                >
+                  <span data-i18n="mode-auto-de">Auto</span>
+                  <span data-i18n="mode-auto-en" class="is-hidden">Auto</span>
+                </button>
+                <button
+                  class="mode-btn"
+                  id="mode-hold-btn"
+                  data-mode="hold"
+                  aria-pressed="false"
+                  aria-label="Hold-Modus: Atemkreis beim Einatmen gedrückt halten"
+                >
+                  <span data-i18n="mode-hold-de">Hold</span>
+                  <span data-i18n="mode-hold-en" class="is-hidden">Hold</span>
+                </button>
+              </div>
+            </li>
+
+            <!-- Sound Toggle: Off / On -->
+            <li class="menu-item menu-item-sound">
+              <span class="menu-label">
+                <span data-i18n="menu-sound-de">Klang</span>
+                <span data-i18n="menu-sound-en" class="is-hidden">Sound</span>
+              </span>
+              <div
+                class="sound-toggle"
+                role="group"
+                aria-label="Klang ein- oder ausschalten"
+                id="sound-toggle"
+              >
+                <button
+                  class="sound-btn is-active"
+                  id="sound-off-btn"
+                  data-sound="off"
+                  aria-pressed="true"
+                  aria-label="Klang ausschalten"
+                >
+                  <span data-i18n="sound-off-de">Aus</span>
+                  <span data-i18n="sound-off-en" class="is-hidden">Off</span>
+                </button>
+                <button
+                  class="sound-btn"
+                  id="sound-on-btn"
+                  data-sound="on"
+                  aria-pressed="false"
+                  aria-label="Klang einschalten"
+                >
+                  <span data-i18n="sound-on-de">Ein</span>
+                  <span data-i18n="sound-on-en" class="is-hidden">On</span>
+                </button>
+              </div>
+
+              <!-- Audio hooks for future implementation -->
+              <audio id="audio-inhale-de" src="audio/inhale-de.mp3" preload="none" aria-hidden="true"></audio>
+              <audio id="audio-exhale-de" src="audio/exhale-de.mp3" preload="none" aria-hidden="true"></audio>
+              <audio id="audio-inhale-en" src="audio/inhale-en.mp3" preload="none" aria-hidden="true"></audio>
+              <audio id="audio-exhale-en" src="audio/exhale-en.mp3" preload="none" aria-hidden="true"></audio>
+            </li>
+
+            <!-- About -->
+            <li class="menu-item">
+              <button
+                class="menu-link menu-link-about"
+                id="about-open-btn"
+                aria-controls="about-panel"
+                aria-expanded="false"
+                data-opens="about-panel"
+              >
+                <span data-i18n="menu-about-de">Über diese App</span>
+                <span data-i18n="menu-about-en" class="is-hidden">About</span>
+              </button>
+            </li>
+
+            <!-- Disclaimer -->
+            <li class="menu-item">
+              <button
+                class="menu-link menu-link-disclaimer"
+                id="disclaimer-open-btn"
+                aria-controls="disclaimer-panel"
+                aria-expanded="false"
+                data-opens="disclaimer-panel"
+              >
+                <span data-i18n="menu-disclaimer-de">Hinweis</span>
+                <span data-i18n="menu-disclaimer-en" class="is-hidden">Disclaimer</span>
+              </button>
+            </li>
+
+          </ul>
+        </nav>
+
+        <!-- ---- ABOUT PANEL ---- -->
+        <div
+          class="menu-subpanel is-hidden"
+          id="about-panel"
+          role="region"
+          aria-label="Über Simply Breathe"
+          aria-hidden="true"
+          data-panel="about"
+        >
+          <button
+            class="subpanel-back-btn"
+            id="about-close-btn"
+            aria-label="Zurück zum Menü"
+            data-closes="about-panel"
+          >
+            <span data-i18n="subpanel-back-de">← Zurück</span>
+            <span data-i18n="subpanel-back-en" class="is-hidden">← Back</span>
+          </button>
+
+          <div class="subpanel-content">
+            <h2 class="subpanel-title">
+              <span data-i18n="about-title-de">Über diese App</span>
+              <span data-i18n="about-title-en" class="is-hidden">About</span>
+            </h2>
+            <p class="about-text about-text-de" data-i18n="about-body-de">
+              Simply Breathe ist ein ruhiger Moment zum Ankommen, Atmen und Loslassen. Die Übung kann dich dabei unterstützen, nach einem anstrengenden Tag oder bei kreisenden Gedanken wieder etwas mehr bei dir anzukommen.
+            </p>
+            <p class="about-text about-text-en is-hidden" data-i18n="about-body-en">
+              Simply Breathe is a quiet moment to arrive, breathe, and let go. The exercise can support you after a demanding day or when your thoughts keep circling.
+            </p>
+          </div>
+        </div>
+
+        <!-- ---- DISCLAIMER PANEL ---- -->
+        <div
+          class="menu-subpanel is-hidden"
+          id="disclaimer-panel"
+          role="region"
+          aria-label="Hinweis"
+          aria-hidden="true"
+          data-panel="disclaimer"
+        >
+          <button
+            class="subpanel-back-btn"
+            id="disclaimer-close-btn"
+            aria-label="Zurück zum Menü"
+            data-closes="disclaimer-panel"
+          >
+            <span data-i18n="subpanel-back-de">← Zurück</span>
+            <span data-i18n="subpanel-back-en" class="is-hidden">← Back</span>
+          </button>
+
+          <div class="subpanel-content">
+            <h2 class="subpanel-title">
+              <span data-i18n="disclaimer-title-de">Hinweis</span>
+              <span data-i18n="disclaimer-title-en" class="is-hidden">Disclaimer</span>
+            </h2>
+            <p class="disclaimer-text disclaimer-text-de" data-i18n="disclaimer-body-de">
+              Simply Breathe ist eine einfache Atem- und Achtsamkeitsübung zur Unterstützung in ruhigen Momenten, bei Stress oder wenn der Kopf nicht still wird. Die App stellt keine medizinische Beratung, Diagnose oder Behandlung dar und ersetzt keine ärztliche oder psychotherapeutische Hilfe. Wenn du glaubst, dass du einen medizinischen Notfall hast, wende dich bitte sofort an die Notrufnummer deines Landes oder an medizinisches Fachpersonal.
+            </p>
+            <p class="disclaimer-text disclaimer-text-en is-hidden" data-i18n="disclaimer-body-en">
+              Simply Breathe is a simple breathing and mindfulness exercise for quiet moments, stress, or times when your mind will not settle. It does not provide medical advice, diagnosis, or treatment and does not replace medical or psychological care. If you believe you are experiencing a medical emergency, contact your local emergency number or a medical professional immediately.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </aside>
+
+    <!-- Menu Overlay -->
+    <div
+      class="menu-overlay is-hidden"
+      id="menu-overlay"
+      aria-hidden="true"
+      data-closes="menu-drawer"
+    ></div>
+
+  </div><!-- /.app-shell -->
+
+  <!-- Screen reader only utility class usage -->
+  <div class="sr-only" aria-live="polite" id="sr-announcer"></div>
+
+  <!-- GSAP CDN -->
+  <script src="[cdnjs.cloudflare.com](https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js)" defer></script>
+
+  <!-- App Script -->
+  <script src="script.js" defer></script>
+
+</body>
+</html>
