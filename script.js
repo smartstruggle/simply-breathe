@@ -1,11 +1,3 @@
-
----
-
-Now the JavaScript:
-
-**script.js**
-
-```javascript
 /* ============================================================
    SIMPLY BREATHE — script.js
    Clean, modular, no framework dependencies
@@ -610,11 +602,7 @@ function submitFeedback(value) {
   // Soft close
   gsap.delayedCall(1.2, () => {
     gsap.to(el.phaseFeedback, {
-
-
-
-
-opacity: 0,
+      opacity: 0,
       duration: 1,
       ease: 'power2.in',
       delay: 2.5,
